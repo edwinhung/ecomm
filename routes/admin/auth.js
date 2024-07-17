@@ -21,8 +21,11 @@ router.post(
   "/signup",
   [requireEmail, requirePassword, requirePasswordConfirmation],
   async (req, res) => {
-    const error = validationResult(req);
-    res.send(signupTemplate({ req, error }));
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.send(signupTemplate({ req, errors }));
+    }
+
     const { email, password, passwordConfirmation } = req.body;
 
     const user = await usersRepo.create({ email, password });
@@ -45,9 +48,9 @@ router.post(
   "/signin",
   [requireValidEmail, requireExistingPasswordForUser],
   async (req, res) => {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-      return res.send(signinTemplate({ error }));
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.send(signinTemplate({ errors }));
     }
 
     const { email } = req.body;
