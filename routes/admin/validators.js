@@ -35,7 +35,7 @@ module.exports = {
       if (passwordConfirmation !== req.body.password) {
         throw new Error("Password must match");
       }
-      return true;
+      return true; // fix bug caused by express validator
     }),
   requireValidEmail: check("email")
     .trim()
