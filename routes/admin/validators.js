@@ -32,9 +32,10 @@ module.exports = {
     .isLength({ min: 4, max: 20 })
     .withMessage("Must be between 4 and 20 characters")
     .custom((passwordConfirmation, { req }) => {
-      if (passwordConfirmation !== req.body.passowrd) {
+      if (passwordConfirmation !== req.body.password) {
         throw new Error("Password must match");
       }
+      return true;
     }),
   requireValidEmail: check("email")
     .trim()
