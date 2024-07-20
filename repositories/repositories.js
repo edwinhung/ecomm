@@ -34,7 +34,7 @@ module.exports = class Repository {
   }
 
   async create(attrs) {
-    attrs.Id = this.randomId();
+    attrs.id = this.randomId();
     const records = await this.getAll();
     records.push(attrs);
     await this.writeAll(records);
@@ -43,18 +43,18 @@ module.exports = class Repository {
 
   async getOne(id) {
     const records = await this.getAll();
-    return records.find((record) => record.Id === id);
+    return records.find((record) => record.id === id);
   }
 
   async delete(id) {
     const records = await this.getAll();
-    const filteredRecords = records.filter((record) => record.Id !== id);
+    const filteredRecords = records.filter((record) => record.id !== id);
     this.writeAll(filteredRecords);
   }
 
   async update(id, attrs) {
     const records = await this.getAll();
-    const record = records.find((record) => record.Id === id);
+    const record = records.find((record) => record.id === id);
     if (!record) {
       throw new Error(`Record with id ${id} not found`);
     }
